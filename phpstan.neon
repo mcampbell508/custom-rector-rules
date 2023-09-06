@@ -1,0 +1,18 @@
+includes:
+    - vendor/symplify/phpstan-rules/config/symplify-rules.neon
+    - phpstan-baseline.php
+
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    level: 5
+
+    # requires exact closure types
+    checkMissingCallableSignature: true
+
+    paths:
+        - rector.php
+        - config
+        - src
+        - tests
+
+    checkGenericClassInNonGenericObjectType: false
