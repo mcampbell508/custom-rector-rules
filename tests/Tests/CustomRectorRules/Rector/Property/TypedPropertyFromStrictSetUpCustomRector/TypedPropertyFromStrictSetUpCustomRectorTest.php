@@ -6,14 +6,10 @@ namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedP
 
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Rector\Core\Exception\ShouldNotHappenException;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
 final class TypedPropertyFromStrictSetUpCustomRectorTest extends AbstractRectorTestCase
 {
-    /**
-     * @throws ShouldNotHappenException
-     */
     #[DataProvider('provideData')]
     public function test(string $filePath): void
     {

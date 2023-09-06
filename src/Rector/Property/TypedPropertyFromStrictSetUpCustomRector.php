@@ -1,28 +1,27 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace CustomRectorRules\Rector\Property;
 
 use PhpParser\Node;
+use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
+use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\Node\Expr\ClassConstFetch;
-use PhpParser\Node\Arg;
 use PHPStan\Type\Type;
+use Rector\Core\NodeManipulator\ClassMethodPropertyFetchManipulator;
 use Rector\Core\Rector\AbstractRector;
 use Rector\Core\ValueObject\MethodName;
 use Rector\Core\ValueObject\PhpVersionFeature;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
-use Symplify\RuleDocGenerator\Exception\PoorDocumentationException;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use Rector\Core\NodeManipulator\ClassMethodPropertyFetchManipulator;
 
 /**
  * @see \CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\TypedPropertyFromStrictSetUpCustomRectorTest
@@ -34,10 +33,8 @@ final class TypedPropertyFromStrictSetUpCustomRector extends AbstractRector impl
     ) {
     }
 
-    /**
-     * @throws PoorDocumentationException
-     */
-    public function getRuleDefinition() : RuleDefinition
+
+    public function getRuleDefinition(): RuleDefinition
     {
         $description = <<<'DESCRIPTION'
 Add strict typed property based on setUp() strict typed assigns in TestCase.
@@ -52,7 +49,8 @@ The benefits:
 Requires PHP8.1!
 DESCRIPTION;
 
-        return new RuleDefinition($description, [new CodeSample(<<<'CODE_SAMPLE'
+        return new RuleDefinition($description, [new CodeSample(
+            <<<'CODE_SAMPLE'
 use PHPUnit\Framework\TestCase;
 use Mockery\MockInterface;
 use App\User;
@@ -69,7 +67,8 @@ final class SomeClass extends TestCase
     }
 }
 CODE_SAMPLE
-            , <<<'CODE_SAMPLE'
+            ,
+            <<<'CODE_SAMPLE'
 use PHPUnit\Framework\TestCase;
 use Mockery\MockInterface;
 use App\User;
@@ -88,21 +87,23 @@ final class SomeClass extends TestCase
 CODE_SAMPLE
         )]);
     }
+
     /**
      * @return array<class-string<Node>>
      */
-    public function getNodeTypes() : array
+    public function getNodeTypes(): array
     {
         return [Class_::class];
     }
+
     /**
      * @param Class_ $node
      */
-    public function refactor(Node $node) : ?Node
+    public function refactor(Node $node): ?Node
     {
         $setUpClassMethod = $node->getMethod(MethodName::SET_UP);
 
-        if (!$setUpClassMethod instanceof ClassMethod) {
+        if (! $setUpClassMethod instanceof ClassMethod) {
             return null;
         }
         $hasChanged = \false;
@@ -113,19 +114,19 @@ CODE_SAMPLE
                 continue;
             }
             // is not private? we cannot be sure about other usage
-            if (!$property->isPrivate()) {
+            if (! $property->isPrivate()) {
                 continue;
             }
 
             $assignment = $this->getAssignment($property, $setUpClassMethod);
 
-            if (!$assignment instanceof Name) {
+            if (! $assignment instanceof Name) {
                 continue;
             }
 
             $property->type = new Node\IntersectionType([
                 new Name($assignment->toString()),
-                new Name("Mockery\\MockInterface"),
+                new Name('Mockery\\MockInterface'),
             ]);
             $hasChanged = \true;
         }
@@ -134,6 +135,7 @@ CODE_SAMPLE
         }
         return null;
     }
+
     public function provideMinPhpVersion(): int
     {
         return PhpVersionFeature::INTERSECTION_TYPES;
@@ -142,7 +144,10 @@ CODE_SAMPLE
     private function getAssignment($property, $classMethod): ?Name
     {
         $propertyName = $this->nodeNameResolver->getName($property);
-        $assignedExprs = $this->classMethodPropertyFetchManipulator->findAssignsToPropertyName($classMethod, $propertyName);
+        $assignedExprs = $this->classMethodPropertyFetchManipulator->findAssignsToPropertyName(
+            $classMethod,
+            $propertyName
+        );
         $assigned = null;
         /** @var Expr[] $assignedExpr */
         foreach ($assignedExprs as $assignedExpr) {
@@ -174,7 +179,7 @@ CODE_SAMPLE
         if ($node->name->name !== 'mock') {
             return true;
         }
-        if (!$type instanceof FullyQualifiedObjectType) {
+        if (! $type instanceof FullyQualifiedObjectType) {
             return true;
         }
 
