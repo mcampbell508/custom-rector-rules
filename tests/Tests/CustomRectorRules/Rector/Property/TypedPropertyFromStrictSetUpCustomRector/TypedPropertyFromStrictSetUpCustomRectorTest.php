@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CustomRectorRulels\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector;
+namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector;
 
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;

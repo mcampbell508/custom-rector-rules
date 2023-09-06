@@ -30,7 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "CustomRectorRulels\\Tests\\": "tests"
+            "CustomRectorRules\\Tests\\": "tests"
         }
     },
     "scripts": {

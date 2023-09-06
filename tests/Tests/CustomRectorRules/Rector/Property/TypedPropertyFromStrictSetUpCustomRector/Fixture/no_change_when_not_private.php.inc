@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomRectorRulels\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
+namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
 
 use App\User;
 use Mockery;
@@ -20,7 +20,7 @@ final class BasicTestClass extends TestCase
 -----
 <?php
 
-namespace CustomRectorRulels\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
+namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
 
 use App\User;
 use Mockery;

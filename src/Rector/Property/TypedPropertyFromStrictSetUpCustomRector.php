@@ -25,7 +25,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Rector\Core\NodeManipulator\ClassMethodPropertyFetchManipulator;
 
 /**
- * @see \CustomRectorRulels\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\TypedPropertyFromStrictSetUpCustomRectorTest
+ * @see \CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\TypedPropertyFromStrictSetUpCustomRectorTest
  */
 final class TypedPropertyFromStrictSetUpCustomRector extends AbstractRector implements MinPhpVersionInterface
 {
