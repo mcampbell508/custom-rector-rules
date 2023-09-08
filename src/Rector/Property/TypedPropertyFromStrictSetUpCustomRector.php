@@ -10,6 +10,7 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -75,8 +76,8 @@ use App\User;
 
 final class SomeClass extends TestCase
 {
-    private User&MockInterface $user;
-    private App\User&MockInterface $anotherUser;
+    private \App\User&MockInterface $user;
+    private \App\User&MockInterface $anotherUser;
 
     public function setUp()
     {
@@ -125,7 +126,7 @@ CODE_SAMPLE
             }
 
             $property->type = new Node\IntersectionType([
-                new Name($assignment->toString()),
+                new FullyQualified($assignment->toString()),
                 new Name('Mockery\\MockInterface'),
             ]);
             $hasChanged = \true;

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 final class NoChangeWhenAlreadyHasTypeTest extends TestCase
 {
-    public App\User&Mockery\MockInterface $user;
+    public User&Mockery\MockInterface $user;
 
     public function setUp(): void
     {
@@ -28,7 +28,7 @@ use PHPUnit\Framework\TestCase;
 
 final class NoChangeWhenAlreadyHasTypeTest extends TestCase
 {
-    public App\User&Mockery\MockInterface $user;
+    public User&Mockery\MockInterface $user;
 
     public function setUp(): void
     {

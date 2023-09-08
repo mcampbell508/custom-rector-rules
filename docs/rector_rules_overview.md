@@ -24,8 +24,8 @@ Requires PHP8.1!
  {
 -    private $user;
 -    private $anotherUser;
-+    private User&MockInterface $user;
-+    private App\User&MockInterface $anotherUser;
++    private \App\User&MockInterface $user;
++    private \App\User&MockInterface $anotherUser;
 
      public function setUp()
      {

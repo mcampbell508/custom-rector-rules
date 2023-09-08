@@ -2,7 +2,6 @@
 
 namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
 
-use App\User;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -22,13 +21,12 @@ final class BasicTestClassWithString extends TestCase
 
 namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
 
-use App\User;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
 final class BasicTestClassWithString extends TestCase
 {
-    private App\User&Mockery\MockInterface $user;
+    private \App\User&Mockery\MockInterface $user;
 
     public function setUp(): void
     {

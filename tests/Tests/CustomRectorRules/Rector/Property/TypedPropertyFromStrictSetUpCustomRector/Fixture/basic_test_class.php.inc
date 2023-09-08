@@ -28,7 +28,7 @@ use PHPUnit\Framework\TestCase;
 
 final class BasicTestClass extends TestCase
 {
-    private App\User&Mockery\MockInterface $user;
+    private \App\User&Mockery\MockInterface $user;
 
     public function setUp(): void
     {
