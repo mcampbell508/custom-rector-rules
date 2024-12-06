@@ -1,6 +1,6 @@
 # 1 Rules Overview
 
-## TypedPropertyFromStrictSetUpCustomRector
+## MockeryIntersectionTypedPropertyFromStrictSetUpRector
 
 Add strict typed property based on `setUp()` strict typed assigns in TestCase.
 
@@ -13,26 +13,6 @@ The benefits:
 
 Requires PHP8.1!
 
-- class: [`CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector`](../src/Rector/Property/MockeryIntersectionTypedPropertyFromStrictSetUpRector.php)
-
-```diff
- use PHPUnit\Framework\TestCase;
- use Mockery\MockInterface;
- use App\User;
-
- final class SomeClass extends TestCase
- {
--    private $user;
--    private $anotherUser;
-+    private \App\User&MockInterface $user;
-+    private \App\User&MockInterface $anotherUser;
-
-     public function setUp()
-     {
-         $this->user = Mockery::mock(User::class);
-         $this->anotherUser = Mockery::mock('App\User');
-     }
- }
-```
+- class: [`MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector`](../src/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector.php)
 
 <br>
