@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector;
+use CustomRectorRules\Rector\Property\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->rule(TypedPropertyFromStrictSetUpCustomRector::class);
+    $rectorConfig->rule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class);
 };

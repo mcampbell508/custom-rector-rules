@@ -13,7 +13,7 @@ The benefits:
 
 Requires PHP8.1!
 
-- class: [`CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector`](../src/Rector/Property/TypedPropertyFromStrictSetUpCustomRector.php)
+- class: [`CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector`](../src/Rector/Property/MockeryIntersectionTypedPropertyFromStrictSetUpRector.php)
 
 ```diff
  use PHPUnit\Framework\TestCase;

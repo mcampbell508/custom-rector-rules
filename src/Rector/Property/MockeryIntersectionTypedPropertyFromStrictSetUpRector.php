@@ -27,7 +27,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 /**
  * @see \CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\TypedPropertyFromStrictSetUpCustomRectorTest
  */
-final class TypedPropertyFromStrictSetUpCustomRector extends AbstractRector implements MinPhpVersionInterface
+final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends AbstractRector implements MinPhpVersionInterface
 {
     public function __construct(
         private readonly ClassMethodPropertyFetchManipulator $classMethodPropertyFetchManipulator,

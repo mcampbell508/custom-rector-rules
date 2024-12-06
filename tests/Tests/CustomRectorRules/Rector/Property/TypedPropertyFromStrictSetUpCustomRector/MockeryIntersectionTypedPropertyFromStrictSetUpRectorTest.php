@@ -8,7 +8,7 @@ use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class TypedPropertyFromStrictSetUpCustomRectorTest extends AbstractRectorTestCase
+final class MockeryIntersectionTypedPropertyFromStrictSetUpRectorTest extends AbstractRectorTestCase
 {
     #[DataProvider('provideData')]
     public function test(string $filePath): void
