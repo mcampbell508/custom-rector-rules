@@ -3,8 +3,7 @@ includes:
     - phpstan-baseline.php
 
 parameters:
-    reportUnmatchedIgnoredErrors: false
-    level: 5
+    level: 8
 
     # requires exact closure types
     checkMissingCallableSignature: true

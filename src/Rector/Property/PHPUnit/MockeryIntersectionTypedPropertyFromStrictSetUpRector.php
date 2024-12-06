@@ -9,11 +9,13 @@ use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Property;
 use PHPStan\Type\Type;
 use Rector\NodeManipulator\ClassMethodPropertyFetchManipulator;
 use Rector\Rector\AbstractRector;
@@ -142,7 +144,7 @@ CODE_SAMPLE
         return PhpVersionFeature::INTERSECTION_TYPES;
     }
 
-    private function getAssignment($property, $classMethod): ?Name
+    private function getAssignment(Property $property, ClassMethod $classMethod): ?Name
     {
         $propertyName = $this->nodeNameResolver->getName($property);
         $assignedExprs = $this->classMethodPropertyFetchManipulator->findAssignsToPropertyName(
@@ -181,7 +183,7 @@ CODE_SAMPLE
             return true;
         }
 
-        if ($node->name->name !== 'mock') {
+        if ($node->name instanceof Identifier && $node->name->name !== 'mock') {
             return true;
         }
         if (! $type instanceof FullyQualifiedObjectType) {
@@ -192,7 +194,7 @@ CODE_SAMPLE
             return true;
         }
 
-        if (! isset($node->args[0]) && ! $node->args[0] instanceof Arg) {
+        if (! isset($node->args[0]) || ! $node->args[0] instanceof Arg) {
             return true;
         }
 
