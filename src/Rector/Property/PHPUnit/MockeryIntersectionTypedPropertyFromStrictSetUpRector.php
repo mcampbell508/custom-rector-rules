@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MCampbell508\CustomRectorRules\Rector\Property\PHPUnit;
 
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
@@ -17,26 +18,39 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use PHPStan\Type\Type;
+use Rector\Application\Provider\CurrentFileProvider;
+use Rector\CodingStyle\Node\NameImporter;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\NodeManipulator\ClassMethodPropertyFetchManipulator;
 use Rector\Rector\AbstractRector;
+use Rector\ValueObject\Application\File;
 use Rector\ValueObject\MethodName;
 use Rector\ValueObject\PhpVersionFeature;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
+use Symplify\RuleDocGenerator\Exception\PoorDocumentationException;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use Webmozart\Assert\Assert;
 
 /**
  * @see \MCampbell508\CustomRectorRules\Tests\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector
  */
-final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends AbstractRector implements MinPhpVersionInterface
+final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends AbstractRector implements MinPhpVersionInterface, ConfigurableRectorInterface
 {
+    private MockeryIntersectionTypedPropertyFromStrictSetUp $config;
+
     public function __construct(
         private readonly ClassMethodPropertyFetchManipulator $classMethodPropertyFetchManipulator,
+        private readonly NameImporter $nameImporter,
+        private readonly CurrentFileProvider $currentFileProvider,
     ) {
     }
 
 
+    /**
+     * @throws PoorDocumentationException
+     */
     public function getRuleDefinition(): RuleDefinition
     {
         $description = <<<'DESCRIPTION'
@@ -99,6 +113,19 @@ CODE_SAMPLE
         return [Class_::class];
     }
 
+    public function configure(array $configuration): void
+    {
+        if (count($configuration) !== 0) {
+            Assert::count($configuration, 1);
+            Assert::isInstanceOf($configuration[0], MockeryIntersectionTypedPropertyFromStrictSetUp::class);
+            $config = $configuration[0];
+        } else {
+            $config = new MockeryIntersectionTypedPropertyFromStrictSetUp();
+        }
+
+        $this->config = $config;
+    }
+
     /**
      * @param Class_ $node
      */
@@ -127,9 +154,22 @@ CODE_SAMPLE
                 continue;
             }
 
+            $assignmentName = new FullyQualified($assignment->toString());
+            $mockInterfaceName = new FullyQualified('Mockery\\MockInterface');
+            $file = $this->currentFileProvider->getFile();
+
+            if ($this->config->useShortImports && $file instanceof File) {
+                $assignmentName = $this->nameImporter->importName($assignmentName, $file);
+                $mockInterfaceName = $this->nameImporter->importName($mockInterfaceName, $file);
+            }
+
+            if (!$assignmentName instanceof Name || !$mockInterfaceName instanceof Name) {
+                continue;
+            }
+
             $property->type = new Node\IntersectionType([
-                new FullyQualified($assignment->toString()),
-                new Name('Mockery\\MockInterface'),
+                $assignmentName,
+                $mockInterfaceName,
             ]);
             $hasChanged = \true;
         }

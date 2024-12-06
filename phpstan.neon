@@ -1,9 +1,8 @@
 includes:
     - vendor/symplify/phpstan-rules/config/symplify-rules.neon
-    - phpstan-baseline.php
 
 parameters:
-    level: 8
+    level: max
 
     # requires exact closure types
     checkMissingCallableSignature: true
@@ -14,4 +13,6 @@ parameters:
         - src
         - tests
 
-    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+         # rector co-variant
+         - '#Parameter \#1 \$node (.*?) of method MCampbell508\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\RectorInterface\:\:refactor\(\)#'
