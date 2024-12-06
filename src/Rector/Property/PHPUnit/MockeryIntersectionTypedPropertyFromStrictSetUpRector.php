@@ -38,7 +38,7 @@ final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends Abstra
     public function getRuleDefinition(): RuleDefinition
     {
         $description = <<<'DESCRIPTION'
-Add strict typed property based on setUp() strict typed assigns in TestCase.
+Add Mockery intersection typed property based on setUp() Mockery typed assigns in TestCase.
 
 This differs from the built-in Rector rule "TypedPropertyFromStrictSetUpRector" slightly to suit my preferred style.
 
