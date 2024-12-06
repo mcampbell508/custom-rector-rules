@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CustomRectorRules\Rector\Property;
+namespace MCampbell508\CustomRectorRules\Rector\Property\PHPUnit;
 
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -25,7 +25,7 @@ use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\TypedPropertyFromStrictSetUpCustomRectorTest
+ * @see \MCampbell508\CustomRectorRules\Tests\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector
  */
 final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends AbstractRector implements MinPhpVersionInterface
 {

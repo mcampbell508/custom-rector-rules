@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector;
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
 
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;

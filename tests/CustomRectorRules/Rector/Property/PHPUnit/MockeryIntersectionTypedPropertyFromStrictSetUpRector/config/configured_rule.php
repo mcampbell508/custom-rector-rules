@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use CustomRectorRules\Rector\Property\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {

@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "CustomRectorRules\\": "src"
+            "MCampbell508\\CustomRectorRules\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "CustomRectorRules\\Tests\\": "tests"
+            "MCampbell508\\CustomRectorRules\\Tests\\": "tests"
         }
     },
     "scripts": {

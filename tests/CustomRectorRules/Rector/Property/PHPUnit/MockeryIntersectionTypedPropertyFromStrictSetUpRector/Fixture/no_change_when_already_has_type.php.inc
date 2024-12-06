@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture;
 
 use App\User;
 use Mockery;
@@ -20,7 +20,7 @@ final class NoChangeWhenAlreadyHasTypeTest extends TestCase
 -----
 <?php
 
-namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture;
 
 use App\User;
 use Mockery;

@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture;
 
 use App\User;
 use Mockery;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 final class BasicTestClass extends TestCase
 {
-    private $user;
+    public $user;
 
     public function setUp(): void
     {
@@ -20,7 +20,7 @@ final class BasicTestClass extends TestCase
 -----
 <?php
 
-namespace CustomRectorRules\Tests\Tests\CustomRectorRules\Rector\Property\TypedPropertyFromStrictSetUpCustomRector\Fixture;
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture;
 
 use App\User;
 use Mockery;
@@ -28,7 +28,7 @@ use PHPUnit\Framework\TestCase;
 
 final class BasicTestClass extends TestCase
 {
-    private \App\User&Mockery\MockInterface $user;
+    public $user;
 
     public function setUp(): void
     {
