@@ -150,7 +150,6 @@ CODE_SAMPLE
             $propertyName
         );
         $assigned = null;
-        /** @var Expr[] $assignedExpr */
         foreach ($assignedExprs as $assignedExpr) {
             $type = $this->nodeTypeResolver->getType($assignedExpr);
 
@@ -158,8 +157,13 @@ CODE_SAMPLE
                 continue;
             }
 
+            if (!isset($assignedExpr->args[0])) {
+                continue;
+            }
+
             /** @var Arg $firstArg */
             $firstArg = $assignedExpr->args[0];
+
             $name = $this->getNameFromClassConstFetch($firstArg->value);
             if (! $name instanceof Name) {
                 continue;
@@ -171,7 +175,7 @@ CODE_SAMPLE
         return $assigned;
     }
 
-    private function shouldSkipExpression(Node $node, Type $type): bool
+    private function shouldSkipExpression(Expr $node, Type $type): bool
     {
         if (! $node instanceof StaticCall) {
             return true;
@@ -207,6 +211,10 @@ CODE_SAMPLE
             return new Name($expr->value);
         }
 
-        return $expr->class;
+        if (isset($expr->class) && $expr->class instanceof Name) {
+            return $expr->class;
+        }
+
+        return null;
     }
 }
