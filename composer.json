@@ -37,13 +37,28 @@
     },
     "scripts": {
         "phpstan": "vendor/bin/phpstan analyse --ansi",
-        "check-cs": "vendor/bin/php-cs-fixer fix --dry-run -v && vendor/bin/phpcs -p",
-        "fix-cs": "vendor/bin/php-cs-fixer fix -v && vendor/bin/phpcbf -p",
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix",
+        "phpcs": "vendor/bin/phpcs -p",
+        "phpcbf": "vendor/bin/phpcbf",
+        "rector-dry-run": "vendor/bin/rector process --dry-run --ansi",
+        "rector": "vendor/bin/rector process --ansi",
+        "check-cs": [
+            "@composer php-cs-fixer --dry-run",
+            "@composer phpcs"
+        ],
+        "fix-cs": [
+            "@composer rector",
+            "@composer php-cs-fixer",
+            "@composer phpcbf"
+        ],
+        "analyse": [
+            "@composer check-cs",
+            "@composer rector-dry-run",
+            "@composer phpstan"
+        ],
         "docs": [
             "vendor/bin/rule-doc-generator generate src --output-file docs/rector_rules_overview.md --ansi"
-        ],
-        "rector-dry-run": "vendor/bin/rector process --dry-run --ansi",
-        "rector": "vendor/bin/rector process --ansi"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
