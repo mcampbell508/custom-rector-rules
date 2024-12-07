@@ -30,6 +30,7 @@ use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
 use Symplify\RuleDocGenerator\Exception\PoorDocumentationException;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
 
@@ -66,7 +67,7 @@ The benefits:
 Requires PHP8.1!
 DESCRIPTION;
 
-        return new RuleDefinition($description, [new CodeSample(
+        return new RuleDefinition($description, [new ConfiguredCodeSample(
             <<<'CODE_SAMPLE'
 use PHPUnit\Framework\TestCase;
 use Mockery\MockInterface;
@@ -101,7 +102,8 @@ final class SomeClass extends TestCase
         $this->anotherUser = Mockery::mock('App\User');
     }
 }
-CODE_SAMPLE
+CODE_SAMPLE,
+            [new MockeryIntersectionTypedPropertyFromStrictSetUp(true)]
         )]);
     }
 

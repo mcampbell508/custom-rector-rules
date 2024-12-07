@@ -13,6 +13,8 @@ The benefits:
 
 Requires PHP8.1!
 
+:wrench: **configure it!**
+
 - class: [`MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector`](../src/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector.php)
 
 <br>
