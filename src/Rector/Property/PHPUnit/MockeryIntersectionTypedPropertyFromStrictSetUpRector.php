@@ -253,7 +253,7 @@ CODE_SAMPLE,
             return new Name($expr->value);
         }
 
-        if (!isset($expr->class)) {
+        if (! $expr instanceof ClassConstFetch) {
             return null;
         }
 
