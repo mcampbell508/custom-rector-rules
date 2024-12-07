@@ -6,10 +6,14 @@ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property
 
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Rector\Exception\ShouldNotHappenException;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
 final class MockeryIntersectionTypedPropertyFromStrictSetUpRectorTest extends AbstractRectorTestCase
 {
+    /**
+     * @throws ShouldNotHappenException
+     */
     #[DataProvider('provideData')]
     public function test(string $filePath): void
     {
@@ -18,7 +22,7 @@ final class MockeryIntersectionTypedPropertyFromStrictSetUpRectorTest extends Ab
 
     public static function provideData(): Iterator
     {
-        return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
+        return self::yieldFilesFromDirectory(__DIR__ . '/Fixture/Default');
     }
 
     public function provideConfigFilePath(): string
