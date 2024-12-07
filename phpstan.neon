@@ -8,7 +8,6 @@ parameters:
     checkMissingCallableSignature: true
 
     paths:
-        - rector.php
         - config
         - src
         - tests
