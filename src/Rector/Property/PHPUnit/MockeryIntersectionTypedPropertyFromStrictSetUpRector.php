@@ -253,7 +253,7 @@ CODE_SAMPLE,
             return new Name($expr->value);
         }
 
-        if (property_exists($expr, 'class') && $expr->class !== null && $expr->class instanceof Name) {
+        if (property_exists($expr, 'class') && $expr->class instanceof Name) {
             return $expr->class;
         }
 
