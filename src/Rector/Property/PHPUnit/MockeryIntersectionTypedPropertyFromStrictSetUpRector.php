@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MCampbell508\CustomRectorRules\Rector\Property\PHPUnit;
 
+use PhpParser\Node\IntersectionType;
 use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -39,7 +40,7 @@ use Webmozart\Assert\Assert;
  */
 final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends AbstractRector implements MinPhpVersionInterface, ConfigurableRectorInterface
 {
-    private MockeryIntersectionTypedPropertyFromStrictSetUp $config;
+    private MockeryIntersectionTypedPropertyFromStrictSetUp $mockeryIntersectionTypedPropertyFromStrictSetUp;
 
     public function __construct(
         private readonly ClassMethodPropertyFetchManipulator $classMethodPropertyFetchManipulator,
@@ -47,7 +48,6 @@ final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends Abstra
         private readonly CurrentFileProvider $currentFileProvider,
     ) {
     }
-
 
     /**
      * @throws PoorDocumentationException
@@ -104,7 +104,7 @@ final class SomeClass extends TestCase
     }
 }
 CODE_SAMPLE,
-            [new MockeryIntersectionTypedPropertyFromStrictSetUp(true)]
+            [new MockeryIntersectionTypedPropertyFromStrictSetUp(true)],
         )]);
     }
 
@@ -118,7 +118,7 @@ CODE_SAMPLE,
 
     public function configure(array $configuration): void
     {
-        if (count($configuration) !== 0) {
+        if ($configuration !== []) {
             Assert::count($configuration, 1);
             Assert::isInstanceOf($configuration[0], MockeryIntersectionTypedPropertyFromStrictSetUp::class);
             $config = $configuration[0];
@@ -126,7 +126,7 @@ CODE_SAMPLE,
             $config = new MockeryIntersectionTypedPropertyFromStrictSetUp();
         }
 
-        $this->config = $config;
+        $this->mockeryIntersectionTypedPropertyFromStrictSetUp = $config;
     }
 
     /**
@@ -147,7 +147,7 @@ CODE_SAMPLE,
                 continue;
             }
             // is not private? we cannot be sure about other usage
-            if (! $property->isPrivate()) {
+            if ($property->isPrivate()) {
                 continue;
             }
 
@@ -161,7 +161,7 @@ CODE_SAMPLE,
             $mockInterfaceName = new FullyQualified('Mockery\\MockInterface');
             $file = $this->currentFileProvider->getFile();
 
-            if ($this->config->useShortImports && $file instanceof File) {
+            if ($this->mockeryIntersectionTypedPropertyFromStrictSetUp->useShortImports && $file instanceof File) {
                 $assignmentName = $this->nameImporter->importName($assignmentName, $file);
                 $mockInterfaceName = $this->nameImporter->importName($mockInterfaceName, $file);
             }
@@ -170,7 +170,7 @@ CODE_SAMPLE,
                 continue;
             }
 
-            $property->type = new Node\IntersectionType([
+            $property->type = new IntersectionType([
                 $assignmentName,
                 $mockInterfaceName,
             ]);
@@ -179,6 +179,7 @@ CODE_SAMPLE,
         if ($hasChanged) {
             return $node;
         }
+
         return null;
     }
 
@@ -192,7 +193,7 @@ CODE_SAMPLE,
         $propertyName = $this->nodeNameResolver->getName($property);
         $assignedExprs = $this->classMethodPropertyFetchManipulator->findAssignsToPropertyName(
             $classMethod,
-            $propertyName
+            $propertyName,
         );
         $assigned = null;
         foreach ($assignedExprs as $assignedExpr) {
@@ -220,13 +221,13 @@ CODE_SAMPLE,
         return $assigned;
     }
 
-    private function shouldSkipExpression(Expr $node, Type $type): bool
+    private function shouldSkipExpression(Expr $expr, Type $type): bool
     {
-        if (! $node instanceof StaticCall) {
+        if (! $expr instanceof StaticCall) {
             return true;
         }
 
-        if ($node->name instanceof Identifier && $node->name->name !== 'mock') {
+        if ($expr->name instanceof Identifier && $expr->name->name !== 'mock') {
             return true;
         }
         if (! $type instanceof FullyQualifiedObjectType) {
@@ -237,17 +238,13 @@ CODE_SAMPLE,
             return true;
         }
 
-        if (! isset($node->args[0]) || ! $node->args[0] instanceof Arg) {
+        if (! isset($expr->args[0]) || ! $expr->args[0] instanceof Arg) {
             return true;
         }
 
-        $value = $node->args[0]->value;
+        $value = $expr->args[0]->value;
 
-        if (! $value instanceof ClassConstFetch && ! $value instanceof String_) {
-            return true;
-        }
-
-        return false;
+        return ! $value instanceof ClassConstFetch && ! $value instanceof String_;
     }
 
     private function getNameFromClassConstFetch(Expr $expr): ?Name
@@ -256,7 +253,7 @@ CODE_SAMPLE,
             return new Name($expr->value);
         }
 
-        if (isset($expr->class) && $expr->class instanceof Name) {
+        if (property_exists($expr, 'class') && $expr->class !== null && $expr->class instanceof Name) {
             return $expr->class;
         }
 
