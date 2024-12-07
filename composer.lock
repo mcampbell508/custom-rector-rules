@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5bad835fe619f70c150c86dec05d5680",
+    "content-hash": "83a00ff7b62cfd54bbd74f463b4619ca",
     "packages": [
         {
             "name": "phpstan/phpstan",
@@ -26,7 +26,6 @@
             "conflict": {
                 "phpstan/phpstan-shim": "*"
             },
-            "default-branch": true,
             "bin": [
                 "phpstan",
                 "phpstan.phar"
@@ -61,10 +60,6 @@
                 {
                     "url": "https://github.com/phpstan",
                     "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
-                    "type": "tidelift"
                 }
             ],
             "time": "2023-09-05T14:22:44+00:00"
@@ -1784,6 +1779,7 @@
                 "issues": "https://github.com/rectorphp/phpstan-rules/issues",
                 "source": "https://github.com/rectorphp/phpstan-rules/tree/0.6.11"
             },
+            "abandoned": "symplify/phpstan-rules",
             "time": "2023-08-07T23:14:41+00:00"
         },
         {
@@ -4544,6 +4540,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": "symfony/dependency-injection",
             "time": "2023-02-03T09:12:23+00:00"
         },
         {
@@ -4672,6 +4669,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2023-02-05T09:58:31+00:00"
         },
         {
@@ -4738,6 +4736,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": "custom code",
             "time": "2023-02-05T14:53:28+00:00"
         },
         {
@@ -4831,13 +4830,13 @@
             },
             "type": "phpstan-extension",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "11.2-dev"
-                },
                 "phpstan": {
                     "includes": [
                         "config/config.neon"
                     ]
+                },
+                "branch-alias": {
+                    "dev-main": "11.2-dev"
                 }
             },
             "autoload": {
@@ -4889,14 +4888,14 @@
             },
             "type": "phpstan-extension",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "11.1-dev"
-                },
                 "phpstan": {
                     "includes": [
                         "config/services/services.neon",
                         "config/packages/symfony/services.neon"
                     ]
+                },
+                "branch-alias": {
+                    "dev-main": "11.1-dev"
                 }
             },
             "autoload": {
@@ -5116,6 +5115,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": "symfony/filesystem",
             "time": "2023-02-05T13:38:33+00:00"
         },
         {
@@ -5171,6 +5171,7 @@
             "support": {
                 "source": "https://github.com/symplify/symplify-kernel/tree/11.1.27"
             },
+            "abandoned": "symfony/http-kernel",
             "time": "2023-02-03T08:21:24+00:00"
         },
         {
@@ -5408,7 +5409,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.1"
+        "php": ">=8.2"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
