@@ -17,4 +17,6 @@ php-scoper.phar
 box.phar
 php-parallel-lint
 
+.php-cs-fixer.cache
+
 tmp
