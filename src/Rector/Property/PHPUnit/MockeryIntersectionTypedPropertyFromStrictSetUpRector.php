@@ -29,6 +29,7 @@ use Rector\ValueObject\PhpVersionFeature;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
 use Symplify\RuleDocGenerator\Exception\PoorDocumentationException;
+use Symplify\RuleDocGenerator\Exception\ShouldNotHappenException;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -51,6 +52,7 @@ final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends Abstra
 
     /**
      * @throws PoorDocumentationException
+     * @throws ShouldNotHappenException
      */
     public function getRuleDefinition(): RuleDefinition
     {
