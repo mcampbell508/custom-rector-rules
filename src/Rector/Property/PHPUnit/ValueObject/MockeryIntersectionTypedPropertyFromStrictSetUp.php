@@ -8,6 +8,8 @@ final readonly class MockeryIntersectionTypedPropertyFromStrictSetUp
 {
     public function __construct(
         public bool $useShortImports = false,
+        public bool $replaceExistingType = false,
+        public bool $includeNonPrivateProperties = false,
     ) {
     }
 }

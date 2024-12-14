@@ -143,11 +143,11 @@ CODE_SAMPLE,
 
         foreach ($node->getProperties() as $property) {
             // type is already set
-            if ($property->type !== null) {
+            if (!$this->mockeryIntersectionTypedPropertyFromStrictSetUp->replaceExistingType && $property->type !== null) {
                 continue;
             }
             // is not private? we cannot be sure about other usage
-            if ($property->isPrivate()) {
+            if (!$this->mockeryIntersectionTypedPropertyFromStrictSetUp->includeNonPrivateProperties && ! $property->isPrivate()) {
                 continue;
             }
 
