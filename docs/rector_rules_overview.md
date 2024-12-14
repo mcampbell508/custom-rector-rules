@@ -1,20 +1,3 @@
-# 1 Rules Overview
+# Rules Overview (1)
 
-## MockeryIntersectionTypedPropertyFromStrictSetUpRector
-
-Add Mockery intersection typed property based on `setUp()` Mockery typed assigns in TestCase.
-
-This differs from the built-in Rector rule "TypedPropertyFromStrictSetUpRector" slightly to suit my preferred style.
-
-The benefits:
-
-* Use `MockInterface` instead of `LegacyMockInterface`
-* Type is an intersection rather than union
-
-Requires PHP8.1!
-
-:wrench: **configure it!**
-
-- class: [`MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector`](../src/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector.php)
-
-<br>
+- class: [`MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector`](/docs/mockery_property_types.md)
