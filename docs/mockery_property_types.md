@@ -3,6 +3,9 @@
 The `MockeryIntersectionTypedPropertyFromStrictSetUpRector` is a custom Rector rule designed to enhance the type definitions of Mockery-based properties in PHPUnit
 `TestCase` classes. It ensures that properties initialized in the `setUp()` method with Mockery are assigned intersection types, improving type safety and code clarity.
 
+<details>
+  <summary>Click to expand for greater detail</summary>
+
 ## Key Features
 
 - **Intersection Type Support**: Adds intersection types (e.g., `\App\User&MockInterface`) to properties assigned Mockery mocks in the `setUp()` method.
@@ -44,21 +47,300 @@ The behavior of this Rector rule can be customized through the [`MockeryIntersec
 - **Type**: `bool`
 - **Default**: `false`
 - **Description**: Determines whether short imports should be used when generating or modifying code.
-  - When set to `true`, the class will prefer short import statements.
-  - When set to `false`, fully qualified names will be used.
+- When set to `true`, the class will prefer short import statements.
+- When set to `false`, fully qualified names will be used.
 
 ### `replaceExistingType`
+
+> [!CAUTION]
+> This is a more risky configuration operation and should be used with caution! It would be advised to check any changed
+> types are as expected, once running with this config option.
+
 - **Type**: `bool`
 - **Default**: `false`
 - **Description**: Controls whether existing types on properties should be replaced.
-  - When set to `true`, any existing type annotations on the property will be replaced.
-  - When set to `false`, existing type annotations will remain untouched.
+- When set to `true`, any existing type annotations on the property will be replaced.
+- When set to `false`, existing type annotations will remain untouched.
 
 ### `includeNonPrivateProperties`
+
+> [!CAUTION]
+> This is a more risky configuration operation and should be used with caution! It would be advised to check any changed
+> types are as expected, once running with this config option.
+
 - **Type**: `bool`
 - **Default**: `false`
 - **Description**: Specifies whether non-private properties should be included in the processing.
-  - When set to `true`, properties with visibility other than `private` will be included.
-  - When set to `false`, only `private` properties will be considered.
+- When set to `true`, properties with visibility other than `private` will be included.
+- When set to `false`, only `private` properties will be considered.
+
+</details>
 
 :wrench: **configure it!**
+
+## Example set 1 - default configuration
+
+- class: [`MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector`](../src/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector.php)
+
+```php
+<?php
+
+use Rector\Config\RectorConfig;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class, [
+        new MockeryIntersectionTypedPropertyFromStrictSetUp(),
+    ]);
+```
+
+### Example 1
+
+```diff
+ <?php
+
+ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\Default;
+
+ use App\User;
+ use Mockery;
+ use PHPUnit\Framework\TestCase;
+
+ final class BasicTestClass extends TestCase
+ {
+-    private $user;
++    private \App\User&\Mockery\MockInterface $user;
+
+     public function setUp(): void
+     {
+         $this->user = Mockery::mock(User::class);
+     }
+ }
+
+ ?>
+```
+
+### Example 2
+
+```diff
+ <?php
+
+ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\Default;
+
+ use Mockery;
+ use PHPUnit\Framework\TestCase;
+
+ final class BasicTestClassWithString extends TestCase
+ {
+-    private $user;
++    private \App\User&\Mockery\MockInterface $user;
+
+     public function setUp(): void
+     {
+         $this->user = Mockery::mock('App\User');
+     }
+ }
+
+ ?>
+```
+
+## Example set 2 - `useShortImports: true`
+
+```php
+<?php
+
+use Rector\Config\RectorConfig;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class, [
+        new MockeryIntersectionTypedPropertyFromStrictSetUp(true),
+    ]);
+```
+
+### Example 1
+
+```diff
+ <?php
+
+ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\UseShortImports;
+
++use Mockery\MockInterface;
+ use App\User;
+ use Mockery;
+ use PHPUnit\Framework\TestCase;
+
+ final class BasicTestClass extends TestCase
+ {
+-    private $user;
++    private User&MockInterface $user;
+
+     public function setUp(): void
+     {
+         $this->user = Mockery::mock(User::class);
+     }
+ }
+
+ ?>
+```
+
+### Example 2
+
+```diff
+ <?php
+
+ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\UseShortImports;
+
++use App\User;
++use Mockery\MockInterface;
+ use Mockery;
+ use PHPUnit\Framework\TestCase;
+
+ final class BasicTestClassWithString extends TestCase
+ {
+-    private $user;
++    private User&MockInterface $user;
+
+     public function setUp(): void
+     {
+         $this->user = Mockery::mock('App\User');
+     }
+ }
+
+ ?>
+```
+
+## Example set 3 - `replaceExistingType: true`
+
+> [!CAUTION]
+> This is a more risky configuration operation and should be used with caution! It would be advised to check any changed
+> types are as expected, once running with this config option.
+
+```php
+<?php
+
+use Rector\Config\RectorConfig;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class, [
+        new MockeryIntersectionTypedPropertyFromStrictSetUp(false, true),
+    ]);
+```
+
+### Example 1
+
+```diff
+ <?php
+
+ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\ReplaceExistingTypeConfig;
+
+ use Mockery;
+ use PHPUnit\Framework\TestCase;
+
+ final class ItMakesChangeWhenAlreadyHasTypeWithClassConstFetch extends TestCase
+ {
+-    private \App\User $user;
++    private \App\User&\Mockery\MockInterface $user;
+
+     public function setUp(): void
+     {
+         $this->user = Mockery::mock(\App\User::class);
+     }
+ }
+
+ ?>
+```
+
+### Example 2
+
+```diff
+ <?php
+
+ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\ReplaceExistingTypeConfig;
+
+ use Mockery;
+ use PHPUnit\Framework\TestCase;
+
+ final class ItMakesChangeWhenAlreadyHasTypeWithString extends TestCase
+ {
+-    private \App\User $user;
++    private \App\User&\Mockery\MockInterface $user;
+
+     public function setUp(): void
+     {
+         $this->user = Mockery::mock('App\User');
+     }
+ }
+
+ ?>
+```
+
+## Example set 4 - `includeNonPrivateProperties: true`
+
+> [!CAUTION]
+> This is a more risky configuration operation and should be used with caution! It would be advised to check any changed
+> types are as expected, once running with this config option.
+
+```php
+<?php
+
+use Rector\Config\RectorConfig;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class, [
+        new MockeryIntersectionTypedPropertyFromStrictSetUp(false, false, true),
+    ]);
+```
+
+### Example 1
+
+```diff
+ <?php
+
+ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\ReplaceExistingTypeConfig;
+
+ use Mockery;
+ use PHPUnit\Framework\TestCase;
+
+ final class ItMakesChangeWhenAlreadyHasTypeWithClassConstFetch extends TestCase
+ {
+-    protected $user;
++    protected \App\User&\Mockery\MockInterface $user;
+
+     public function setUp(): void
+     {
+         $this->user = Mockery::mock(\App\User::class);
+     }
+ }
+
+ ?>
+```
+
+### Example 2
+
+```diff
+ <?php
+
+ namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\ReplaceExistingTypeConfig;
+
+ use Mockery;
+ use PHPUnit\Framework\TestCase;
+
+ final class ItMakesChangeWhenAlreadyHasTypeWithString extends TestCase
+ {
+-    public $user;
++    public \App\User&\Mockery\MockInterface $user;
+
+     public function setUp(): void
+     {
+         $this->user = Mockery::mock('App\User');
+     }
+ }
+
+ ?>
+```
