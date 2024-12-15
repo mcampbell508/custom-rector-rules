@@ -12,6 +12,13 @@ parameters:
         - src
         - tests
 
+    excludePaths:
+        - bin
+        - src/Command
+
     ignoreErrors:
          # rector co-variant
          - '#Parameter \#1 \$node (.*?) of method MCampbell508\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\RectorInterface\:\:refactor\(\)#'
+         -
+            message: '#Named arguments do not add any value here#'
+            path: config/rule_configuration.php

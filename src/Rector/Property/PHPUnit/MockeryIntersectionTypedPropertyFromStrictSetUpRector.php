@@ -42,20 +42,7 @@ final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends Abstra
 {
     private MockeryIntersectionTypedPropertyFromStrictSetUp $mockeryIntersectionTypedPropertyFromStrictSetUp;
 
-    public function __construct(
-        private readonly ClassMethodPropertyFetchManipulator $classMethodPropertyFetchManipulator,
-        private readonly NameImporter $nameImporter,
-        private readonly CurrentFileProvider $currentFileProvider,
-    ) {
-    }
-
-    /**
-     * @throws PoorDocumentationException
-     * @throws ShouldNotHappenException
-     */
-    public function getRuleDefinition(): RuleDefinition
-    {
-        $description = <<<'DESCRIPTION'
+    public const DOCS_DESCRIPTION = <<<'DESCRIPTION'
 The `MockeryIntersectionTypedPropertyFromStrictSetUpRector` is a custom Rector rule designed to enhance the type definitions of Mockery-based properties in PHPUnit
 `TestCase` classes. It ensures that properties initialized in the `setUp()` method with Mockery are assigned intersection types, improving type safety and code clarity.
 
@@ -100,26 +87,38 @@ The behavior of this Rector rule can be customized through the [`MockeryIntersec
 - **Type**: `bool`
 - **Default**: `false`
 - **Description**: Determines whether short imports should be used when generating or modifying code.
-  - When set to `true`, the class will prefer short import statements.
-  - When set to `false`, fully qualified names will be used.
+- When set to `true`, the class will prefer short import statements.
+- When set to `false`, fully qualified names will be used.
 
 ### `replaceExistingType`
 - **Type**: `bool`
 - **Default**: `false`
 - **Description**: Controls whether existing types on properties should be replaced.
-  - When set to `true`, any existing type annotations on the property will be replaced.
-  - When set to `false`, existing type annotations will remain untouched.
+- When set to `true`, any existing type annotations on the property will be replaced.
+- When set to `false`, existing type annotations will remain untouched.
 
 ### `includeNonPrivateProperties`
 - **Type**: `bool`
 - **Default**: `false`
 - **Description**: Specifies whether non-private properties should be included in the processing.
-  - When set to `true`, properties with visibility other than `private` will be included.
-  - When set to `false`, only `private` properties will be considered.
-
+- When set to `true`, properties with visibility other than `private` will be included.
+- When set to `false`, only `private` properties will be considered.
 DESCRIPTION;
 
-        return new RuleDefinition($description, [new ConfiguredCodeSample(
+    public function __construct(
+        private readonly ClassMethodPropertyFetchManipulator $classMethodPropertyFetchManipulator,
+        private readonly NameImporter $nameImporter,
+        private readonly CurrentFileProvider $currentFileProvider,
+    ) {
+    }
+
+    /**
+     * @throws PoorDocumentationException
+     * @throws ShouldNotHappenException
+     */
+    public function getRuleDefinition(): RuleDefinition
+    {
+        return new RuleDefinition(self::DOCS_DESCRIPTION, [new ConfiguredCodeSample(
             <<<'CODE_SAMPLE'
 use PHPUnit\Framework\TestCase;
 use Mockery\MockInterface;

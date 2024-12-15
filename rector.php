@@ -21,5 +21,6 @@ return RectorConfig::configure()
         // @see https://github.com/rectorphp/rector-src/blob/7f73cf017214257c170d34db3af7283eaeeab657/rector.php#L71
         StringClassNameToClassConstantRector::class,
     ])
+    ->withSkipPath('src/Command')
     ->withPhpSets()
     ->withPreparedSets(deadCode: true, codeQuality: true, naming: true);

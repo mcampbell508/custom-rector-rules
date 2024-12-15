@@ -5,7 +5,9 @@
     "description": "Custom Rector Rules",
     "require": {
         "php": ">=8.2",
-        "rector/rector": "^1.2"
+        "rector/rector": "^1.2",
+        "illuminate/filesystem": "^10.48",
+        "illuminate/container": "^10.48"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0",

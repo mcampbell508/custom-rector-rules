@@ -1,10 +1,9 @@
-# [`MockeryIntersectionTypedPropertyFromStrictSetUpRector`](../src/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector.php)
+# MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector
+
+## Description
 
 The `MockeryIntersectionTypedPropertyFromStrictSetUpRector` is a custom Rector rule designed to enhance the type definitions of Mockery-based properties in PHPUnit
 `TestCase` classes. It ensures that properties initialized in the `setUp()` method with Mockery are assigned intersection types, improving type safety and code clarity.
-
-<details>
-  <summary>Click to expand for greater detail</summary>
 
 ## Key Features
 
@@ -51,11 +50,6 @@ The behavior of this Rector rule can be customized through the [`MockeryIntersec
 - When set to `false`, fully qualified names will be used.
 
 ### `replaceExistingType`
-
-> [!CAUTION]
-> This is a more risky configuration operation and should be used with caution! It would be advised to check any changed
-> types are as expected, once running with this config option.
-
 - **Type**: `bool`
 - **Default**: `false`
 - **Description**: Controls whether existing types on properties should be replaced.
@@ -63,39 +57,41 @@ The behavior of this Rector rule can be customized through the [`MockeryIntersec
 - When set to `false`, existing type annotations will remain untouched.
 
 ### `includeNonPrivateProperties`
-
-> [!CAUTION]
-> This is a more risky configuration operation and should be used with caution! It would be advised to check any changed
-> types are as expected, once running with this config option.
-
 - **Type**: `bool`
 - **Default**: `false`
 - **Description**: Specifies whether non-private properties should be included in the processing.
 - When set to `true`, properties with visibility other than `private` will be included.
 - When set to `false`, only `private` properties will be considered.
+> [!NOTE]
+> This rule is configurable!
+## Examples
 
-</details>
-
-:wrench: **configure it!**
-
-## Example set 1 - default configuration
-
-- class: [`MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector`](../src/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector.php)
+### Example set 1
+#### Configuration
 
 ```php
 <?php
 
-use Rector\Config\RectorConfig;
+declare(strict_types=1);
+
 use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
 use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+use Rector\Config\RectorConfig;
 
-return RectorConfig::configure()
-    ->withConfiguredRule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class, [
-        new MockeryIntersectionTypedPropertyFromStrictSetUp(),
-    ]);
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->ruleWithConfiguration(
+        MockeryIntersectionTypedPropertyFromStrictSetUpRector::class,
+        [
+            new MockeryIntersectionTypedPropertyFromStrictSetUp(),
+        ],
+    );
+};
+
 ```
 
-### Example 1
+#### Example 1: basic_test_class.php.inc
+
+
 
 ```diff
  <?php
@@ -120,7 +116,10 @@ return RectorConfig::configure()
  ?>
 ```
 
-### Example 2
+
+#### Example 2: basic_test_class_with_string.php.inc
+
+
 
 ```diff
  <?php
@@ -144,22 +143,104 @@ return RectorConfig::configure()
  ?>
 ```
 
-## Example set 2 - `useShortImports: true`
+
+#### Example 3: no_change_when_already_has_type.php.inc
 
 ```php
 <?php
 
-use Rector\Config\RectorConfig;
-use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
-use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\Default;
 
-return RectorConfig::configure()
-    ->withConfiguredRule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class, [
-        new MockeryIntersectionTypedPropertyFromStrictSetUp(true),
-    ]);
+use App\User;
+use Mockery;
+use PHPUnit\Framework\TestCase;
+
+final class NoChangeWhenAlreadyHasTypeTest extends TestCase
+{
+    public User&Mockery\MockInterface $user;
+
+    public function setUp(): void
+    {
+        $this->user = Mockery::mock(User::class);
+    }
+}
+
+?>
 ```
 
-### Example 1
+#### Example 4: no_change_when_not_private.php.inc
+
+```php
+<?php
+
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\Default;
+
+use App\User;
+use Mockery;
+use PHPUnit\Framework\TestCase;
+
+final class BasicTestClass extends TestCase
+{
+    protected $user;
+
+    public function setUp(): void
+    {
+        $this->user = Mockery::mock(User::class);
+    }
+}
+
+?>
+```
+
+#### Example 5: no_change_when_not_private2.php.inc
+
+```php
+<?php
+
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\Default;
+
+use App\User;
+use Mockery;
+use PHPUnit\Framework\TestCase;
+
+final class BasicTestClass extends TestCase
+{
+    public $user;
+
+    public function setUp(): void
+    {
+        $this->user = Mockery::mock(User::class);
+    }
+}
+
+?>
+```
+### Example set 2
+#### Configuration
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+use Rector\Config\RectorConfig;
+
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->ruleWithConfiguration(
+        MockeryIntersectionTypedPropertyFromStrictSetUpRector::class,
+        [
+            new MockeryIntersectionTypedPropertyFromStrictSetUp(true),
+        ],
+    );
+};
+
+```
+
+#### Example 1: basic_test_class.php.inc
+
+
 
 ```diff
  <?php
@@ -185,7 +266,10 @@ return RectorConfig::configure()
  ?>
 ```
 
-### Example 2
+
+#### Example 2: basic_test_class_with_string.php.inc
+
+
 
 ```diff
  <?php
@@ -211,26 +295,107 @@ return RectorConfig::configure()
  ?>
 ```
 
-## Example set 3 - `replaceExistingType: true`
 
-> [!CAUTION]
-> This is a more risky configuration operation and should be used with caution! It would be advised to check any changed
-> types are as expected, once running with this config option.
+#### Example 3: no_change_when_already_has_type.php.inc
 
 ```php
 <?php
 
-use Rector\Config\RectorConfig;
-use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
-use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\UseShortImports;
 
-return RectorConfig::configure()
-    ->withConfiguredRule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class, [
-        new MockeryIntersectionTypedPropertyFromStrictSetUp(false, true),
-    ]);
+use App\User;
+use Mockery;
+use PHPUnit\Framework\TestCase;
+
+final class NoChangeWhenAlreadyHasTypeTest extends TestCase
+{
+    public User&Mockery\MockInterface $user;
+
+    public function setUp(): void
+    {
+        $this->user = Mockery::mock(User::class);
+    }
+}
+
+?>
 ```
 
-### Example 1
+#### Example 4: no_change_when_not_private.php.inc
+
+```php
+<?php
+
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\UseShortImports;
+
+use App\User;
+use Mockery;
+use PHPUnit\Framework\TestCase;
+
+final class BasicTestClass extends TestCase
+{
+    protected $user;
+
+    public function setUp(): void
+    {
+        $this->user = Mockery::mock(User::class);
+    }
+}
+
+?>
+```
+
+#### Example 5: no_change_when_not_private2.php.inc
+
+```php
+<?php
+
+namespace MCampbell508\CustomRectorRules\Tests\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector\Fixture\UseShortImports;
+
+use App\User;
+use Mockery;
+use PHPUnit\Framework\TestCase;
+
+final class BasicTestClass extends TestCase
+{
+    public $user;
+
+    public function setUp(): void
+    {
+        $this->user = Mockery::mock(User::class);
+    }
+}
+
+?>
+```
+### Example set 3
+#### Configuration
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
+use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+use Rector\Config\RectorConfig;
+
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->ruleWithConfiguration(
+        MockeryIntersectionTypedPropertyFromStrictSetUpRector::class,
+        [
+            new MockeryIntersectionTypedPropertyFromStrictSetUp(
+                false,
+                true,
+            ),
+        ],
+    );
+};
+
+```
+
+#### Example 1: it_makes_change_when_already_has_type_with_class_const_fetch.php.inc
+
+
 
 ```diff
  <?php
@@ -254,7 +419,10 @@ return RectorConfig::configure()
  ?>
 ```
 
-### Example 2
+
+#### Example 2: it_makes_change_when_already_has_type_with_string.php.inc
+
+
 
 ```diff
  <?php
@@ -278,26 +446,36 @@ return RectorConfig::configure()
  ?>
 ```
 
-## Example set 4 - `includeNonPrivateProperties: true`
-
-> [!CAUTION]
-> This is a more risky configuration operation and should be used with caution! It would be advised to check any changed
-> types are as expected, once running with this config option.
+### Example set 4
+#### Configuration
 
 ```php
 <?php
 
-use Rector\Config\RectorConfig;
+declare(strict_types=1);
+
 use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector;
 use MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\ValueObject\MockeryIntersectionTypedPropertyFromStrictSetUp;
+use Rector\Config\RectorConfig;
 
-return RectorConfig::configure()
-    ->withConfiguredRule(MockeryIntersectionTypedPropertyFromStrictSetUpRector::class, [
-        new MockeryIntersectionTypedPropertyFromStrictSetUp(false, false, true),
-    ]);
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->ruleWithConfiguration(
+        MockeryIntersectionTypedPropertyFromStrictSetUpRector::class,
+        [
+            new MockeryIntersectionTypedPropertyFromStrictSetUp(
+                false,
+                false,
+                true,
+            ),
+        ],
+    );
+};
+
 ```
 
-### Example 1
+#### Example 1: it_makes_change_when_already_has_type_with_class_const_fetch.php.inc
+
+
 
 ```diff
  <?php
@@ -321,7 +499,10 @@ return RectorConfig::configure()
  ?>
 ```
 
-### Example 2
+
+#### Example 2: it_makes_change_when_already_has_type_with_string.php.inc
+
+
 
 ```diff
  <?php
