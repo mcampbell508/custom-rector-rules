@@ -14,6 +14,10 @@ composer require mcampbell508/custom-rector-rules --dev
 
 Run `composer run` to see available Composer scripts.
 
+## Generating Docs
+
+Run `php bin/generate-docs`.
+
 ## Git Hooks
 
 To make use of Git Hooks, made possible by Captain hook, install via:
