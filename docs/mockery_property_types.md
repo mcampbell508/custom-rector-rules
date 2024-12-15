@@ -66,7 +66,7 @@ The behavior of this Rector rule can be customized through the [`MockeryIntersec
 > This rule is configurable!
 ## Examples
 
-### Example set 1
+### Example Set 1 - Default
 #### Configuration
 
 ```php
@@ -215,7 +215,7 @@ final class BasicTestClass extends TestCase
 
 ?>
 ```
-### Example set 2
+### Example Set 2 - Use Short Imports
 #### Configuration
 
 ```php
@@ -367,7 +367,7 @@ final class BasicTestClass extends TestCase
 
 ?>
 ```
-### Example set 3
+### Example Set 3 - Replace Existing Type
 #### Configuration
 
 ```php
@@ -446,7 +446,7 @@ return static function (RectorConfig $rectorConfig): void {
  ?>
 ```
 
-### Example set 4
+### Example Set 4 - Include Non Private Properties
 #### Configuration
 
 ```php

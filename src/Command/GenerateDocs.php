@@ -86,7 +86,11 @@ MARKDOWN;
         $fixtureCount = 1;
 
         foreach ($ruleConfig->fixtures as $fixture) {
-            $markdown .= "\n### Example set $fixtureCount";
+            $markdown .= "\n### Example Set $fixtureCount";
+
+            if ($fixture->exampleName) {
+                $markdown .= ' - ' . $fixture->exampleName;
+            }
 
             $fixtureCount++;
 

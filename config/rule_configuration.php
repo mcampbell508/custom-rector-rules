@@ -19,18 +19,22 @@ return [
         fixtures: [
             new FixtureConfig(
                 path: __DIR__ . '/../tests/CustomRectorRules/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector/Fixture/Default/',
+                exampleName: 'Default',
                 configPath: __DIR__ . '/../tests/CustomRectorRules/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector/config/configured_rule.php',
             ),
             new FixtureConfig(
                 path: __DIR__ . '/../tests/CustomRectorRules/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector/Fixture/UseShortImports/',
+                exampleName: 'Use Short Imports',
                 configPath: __DIR__ . '/../tests/CustomRectorRules/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector/config/use_short_imports_config.php',
             ),
             new FixtureConfig(
                 path: __DIR__ . '/../tests/CustomRectorRules/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector/Fixture/ReplaceExistingTypeConfig/',
+                exampleName: 'Replace Existing Type',
                 configPath: __DIR__ . '/../tests/CustomRectorRules/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector/config/replace_existing_type_config.php',
             ),
             new FixtureConfig(
                 path: __DIR__ . '/../tests/CustomRectorRules/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector/Fixture/IncludeNonPrivateProperties/',
+                exampleName: 'Include Non Private Properties',
                 configPath: __DIR__ . '/../tests/CustomRectorRules/Rector/Property/PHPUnit/MockeryIntersectionTypedPropertyFromStrictSetUpRector/config/include_non_private_properties_config.php',
             ),
         ],
