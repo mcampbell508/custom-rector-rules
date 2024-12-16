@@ -154,12 +154,9 @@ MARKDOWN;
 
     private function generateSummaryMarkdown(array $ruleConfigs, string $outputPath, OutputInterface $output): void
     {
-        $ruleCount = count($ruleConfigs);
-
         $markdown = <<<MARKDOWN
 # Rector Rules Summary
 
-No of rules: $ruleCount
 MARKDOWN . "\n\n";
 
         $counter = 1;

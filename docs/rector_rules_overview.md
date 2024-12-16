@@ -1,6 +1,5 @@
 # Rector Rules Summary
 
-No of rules: 1
 
 ## 1. MockeryIntersectionTypedPropertyFromStrictSetUpRector
 
