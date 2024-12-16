@@ -9,6 +9,7 @@ The `MockeryIntersectionTypedPropertyFromStrictSetUpRector` is a custom Rector r
 
 <details>
 <summary>Click to see rule in greater detail</summary>
+
 ## Key Features
 
 - **Intersection Type Support**: Adds intersection types (e.g., `\App\User&MockInterface`) to properties assigned Mockery mocks in the `setUp()` method.
@@ -52,8 +53,12 @@ The behavior of this Rector rule can be customized through the [`MockeryIntersec
 | `replaceExistingType`      | `bool`   | `false`     | Controls whether existing types on properties should be replaced. If `true`, existing types are replaced; if `false`, they remain untouched.   |
 | `includeNonPrivateProperties` | `bool`   | `false`     | Specifies whether non-private properties are included. If `true`, non-private properties are processed; if `false`, only private ones are.     |
 </details>
+
+
 > [!NOTE]
 > This rule is configurable!
+
+
 ## Examples
 
 ### Example Set 1 - Default

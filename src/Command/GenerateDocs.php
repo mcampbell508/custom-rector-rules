@@ -71,7 +71,7 @@ final class GenerateDocs extends Command
 MARKDOWN;
 
         if ($ruleConfig->ruleType->isConfigurable()) {
-            $markdown .= <<<MARKDOWN
+            $markdown .= "\n\n" . <<<MARKDOWN
 > [!NOTE]
 > This rule is configurable!
 MARKDOWN;

@@ -50,6 +50,7 @@ The `MockeryIntersectionTypedPropertyFromStrictSetUpRector` is a custom Rector r
 
 <details>
 <summary>Click to see rule in greater detail</summary>
+
 ## Key Features
 
 - **Intersection Type Support**: Adds intersection types (e.g., `\App\User&MockInterface`) to properties assigned Mockery mocks in the `setUp()` method.
