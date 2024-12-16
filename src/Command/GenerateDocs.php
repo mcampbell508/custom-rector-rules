@@ -171,6 +171,7 @@ MARKDOWN . "\n\n";
             $markdown .= <<<MARKDOWN
 ## {$counter}. {$baseClass}
 
+- Namespace: `{$className}`
 - Docs: [/docs/{$ruleConfig->ruleDocsConfig->exportPath}](/docs/{$ruleConfig->ruleDocsConfig->exportPath})
 - Source code: [`{$srcCodePath}`](/{$srcCodePath})
 - Configurable: {$isConfigurable}
