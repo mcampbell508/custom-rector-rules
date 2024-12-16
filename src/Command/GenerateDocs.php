@@ -178,7 +178,6 @@ MARKDOWN . "\n\n";
 - Tags: {$tags}
 MARKDOWN . "\n\n";
 
-
             $counter++;
         }
 
