@@ -171,8 +171,8 @@ MARKDOWN . "\n\n";
             $markdown .= <<<MARKDOWN
 ## {$counter}. {$baseClass}
 
-- Docs: [`{$className}`](/docs/{$ruleConfig->ruleDocsConfig->exportPath})
-- Source code: [`{$srcCodePath}`](/blob/main/{$srcCodePath})
+- Docs: [/docs/{$ruleConfig->ruleDocsConfig->exportPath}](/docs/{$ruleConfig->ruleDocsConfig->exportPath})
+- Source code: [`{$srcCodePath}`](/{$srcCodePath})
 - Configurable: {$isConfigurable}
 - Tags: {$tags}
 MARKDOWN . "\n\n";
