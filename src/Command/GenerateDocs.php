@@ -6,6 +6,7 @@ namespace MCampbell508\CustomRectorRules\Command;
 
 use Illuminate\Filesystem\Filesystem;
 use MCampbell508\CustomRectorRules\Config\RuleConfig;
+use MCampbell508\CustomRectorRules\Config\RuleType;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,6 +38,9 @@ final class GenerateDocs extends Command
         foreach ($rules as $ruleConfig) {
             $this->processRule($ruleConfig, $output);
         }
+
+        $summaryOutputPath = __DIR__ . '/../../docs/rector_rules_overview.md';
+        $this->generateSummaryMarkdown($rules, $summaryOutputPath, $output);
 
         $output->writeln('<info>Documentation generation completed successfully.</info>');
 
@@ -144,5 +148,32 @@ MARKDOWN;
 
         $this->filesystem->put($ruleConfig->ruleDocsConfig->exportPath, $markdown);
         $output->writeln('<info>Markdown saved to ' . $ruleConfig->ruleDocsConfig->exportPath . '</info>');
+    }
+
+    private function generateSummaryMarkdown(array $ruleConfigs, string $outputPath, OutputInterface $output): void
+    {
+        $ruleCount = count($ruleConfigs);
+
+        $markdown = <<<MARKDOWN
+# Rector Rules Summary
+
+No of rules: $ruleCount
+MARKDOWN . "\n\n";
+
+        $markdown .= "| Rule Class | Configurable | Tags |\n";
+        $markdown .= "|------------|------|--------------|\n";
+
+        $counter = 1;
+
+        foreach ($ruleConfigs as $ruleConfig) {
+            $className = $counter . '. ' . $ruleConfig->className;
+            $tags = implode(', ', array_map(fn($tag) => "`{$tag}`", $ruleConfig->ruleDocsConfig->tags));
+            $isConfigurable = $ruleConfig->ruleType === RuleType::WITH_CONFIG ? '✅' : '❌';
+
+            $markdown .= "| `{$className}` | {$isConfigurable} | {$tags} |\n";
+        }
+
+        $this->filesystem->put($outputPath, $markdown);
+        $output->writeln("<info>Summary markdown generated at: {$outputPath}</info>");
     }
 }

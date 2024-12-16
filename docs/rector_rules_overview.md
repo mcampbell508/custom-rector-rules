@@ -1,3 +1,7 @@
-# Rules Overview (1)
+# Rector Rules Summary
 
-- class: [`MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector`](/docs/mockery_property_types.md)
+No of rules: 1
+
+| Rule Class | Configurable | Tags |
+|------------|------|--------------|
+| `1. MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector` | ✅ | `typed-properties`, `mockery`, `phpunit`, `configurable`, `php8.1` |
