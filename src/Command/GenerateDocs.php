@@ -77,7 +77,7 @@ MARKDOWN;
 MARKDOWN;
         }
 
-        $markdown .= <<<MARKDOWN
+        $markdown .= "\n\n" . <<<MARKDOWN
 
 ## Examples
 

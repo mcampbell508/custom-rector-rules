@@ -46,6 +46,10 @@ final class MockeryIntersectionTypedPropertyFromStrictSetUpRector extends Abstra
 The `MockeryIntersectionTypedPropertyFromStrictSetUpRector` is a custom Rector rule designed to enhance the type definitions of Mockery-based properties in PHPUnit
 `TestCase` classes. It ensures that properties initialized in the `setUp()` method with Mockery are assigned intersection types, improving type safety and code clarity.
 
+**Minimum PHP Version Required:** 8.1
+
+<details>
+<summary>Click to see rule in greater detail</summary>
 ## Key Features
 
 - **Intersection Type Support**: Adds intersection types (e.g., `\App\User&MockInterface`) to properties assigned Mockery mocks in the `setUp()` method.
@@ -83,26 +87,12 @@ This rule requires **PHP 8.1 or higher** due to its reliance on intersection typ
 
 The behavior of this Rector rule can be customized through the [`MockeryIntersectionTypedPropertyFromStrictSetUp`](/src/Rector/Property/PHPUnit/ValueObject/MockeryIntersectionTypedPropertyFromStrictSetUp.php) configuration object:
 
-### `useShortImports`
-- **Type**: `bool`
-- **Default**: `false`
-- **Description**: Determines whether short imports should be used when generating or modifying code.
-- When set to `true`, the class will prefer short import statements.
-- When set to `false`, fully qualified names will be used.
-
-### `replaceExistingType`
-- **Type**: `bool`
-- **Default**: `false`
-- **Description**: Controls whether existing types on properties should be replaced.
-- When set to `true`, any existing type annotations on the property will be replaced.
-- When set to `false`, existing type annotations will remain untouched.
-
-### `includeNonPrivateProperties`
-- **Type**: `bool`
-- **Default**: `false`
-- **Description**: Specifies whether non-private properties should be included in the processing.
-- When set to `true`, properties with visibility other than `private` will be included.
-- When set to `false`, only `private` properties will be considered.
+| **Option**                 | **Type** | **Default** | **Description**                                                                                                                                 |
+|----------------------------|----------|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `useShortImports`          | `bool`   | `false`     | Determines whether short imports should be used. If `true`, short import statements are preferred; if `false`, fully qualified names are used. |
+| `replaceExistingType`      | `bool`   | `false`     | Controls whether existing types on properties should be replaced. If `true`, existing types are replaced; if `false`, they remain untouched.   |
+| `includeNonPrivateProperties` | `bool`   | `false`     | Specifies whether non-private properties are included. If `true`, non-private properties are processed; if `false`, only private ones are.     |
+</details>
 DESCRIPTION;
 
     public function __construct(
