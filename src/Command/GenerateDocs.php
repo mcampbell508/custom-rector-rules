@@ -166,11 +166,13 @@ MARKDOWN . "\n\n";
             $baseClass = basename(str_replace('\\', '/', $className));
             $tags = implode(', ', array_map(fn($tag) => "`{$tag}`", $ruleConfig->ruleDocsConfig->tags));
             $isConfigurable = $ruleConfig->ruleType === RuleType::WITH_CONFIG ? '✅' : '❌';
+            $srcCodePath = $this->convertToGitHubPath($className);
 
             $markdown .= <<<MARKDOWN
 ## {$counter}. {$baseClass}
 
 - Docs: [{$className}](/docs/{$ruleConfig->ruleDocsConfig->exportPath})
+- Source code: []({$srcCodePath})
 - Configurable: {$isConfigurable}
 - Tags: {$tags}
 MARKDOWN . "\n\n";
@@ -180,5 +182,20 @@ MARKDOWN . "\n\n";
 
         $this->filesystem->put($outputPath, $markdown);
         $output->writeln("<info>Summary markdown generated at: {$outputPath}</info>");
+    }
+
+    private function convertToGitHubPath(
+        string $className,
+    ): string {
+        $githubBasePath = '/blob/main/src/';
+        $rootNamespace = 'MCampbell508\\CustomRectorRules';
+
+        if (str_starts_with($className, $rootNamespace . '\\')) {
+            $className = substr($className, strlen($rootNamespace . '\\'));
+        }
+
+        $filePath = str_replace('\\', '/', $className);
+
+        return $githubBasePath . $filePath . '.php';
     }
 }
