@@ -171,8 +171,8 @@ MARKDOWN . "\n\n";
             $markdown .= <<<MARKDOWN
 ## {$counter}. {$baseClass}
 
-- Docs: [{$className}](/docs/{$ruleConfig->ruleDocsConfig->exportPath})
-- Source code: []({$srcCodePath})
+- Docs: [`{$className}`](/docs/{$ruleConfig->ruleDocsConfig->exportPath})
+- Source code: [`{$srcCodePath}`](/blob/main/{$srcCodePath})
 - Configurable: {$isConfigurable}
 - Tags: {$tags}
 MARKDOWN . "\n\n";
@@ -187,7 +187,7 @@ MARKDOWN . "\n\n";
     private function convertToGitHubPath(
         string $className,
     ): string {
-        $githubBasePath = '/blob/main/src/';
+        $githubBasePath = 'src/';
         $rootNamespace = 'MCampbell508\\CustomRectorRules';
 
         if (str_starts_with($className, $rootNamespace . '\\')) {
