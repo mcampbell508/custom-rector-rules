@@ -1,6 +1,6 @@
 # MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector
 
-**Tags:** `typed-properties`, `mockery`, `phpunit`, `configurable`, `php8.1`
+**Tags:** `typed-properties`, `mockery`, `phpunit`, `configurable`, `php8.1`.
 
 ## Description
 

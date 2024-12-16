@@ -63,7 +63,7 @@ final class GenerateDocs extends Command
     {
         $ruleDocsConfigTags = array_map(fn($tag) => "`{$tag}`", $ruleConfig->ruleDocsConfig->tags);
 
-        $tags = !empty($ruleDocsConfigTags) ? '**Tags:** ' . implode(', ', $ruleDocsConfigTags) : '';
+        $tags = !empty($ruleDocsConfigTags) ? '**Tags:** ' . implode(', ', $ruleDocsConfigTags) . '.' : '';
 
         $markdown = <<<MARKDOWN
 # {$ruleConfig->className}
