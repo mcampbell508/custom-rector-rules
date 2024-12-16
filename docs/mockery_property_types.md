@@ -1,5 +1,7 @@
 # MCampbell508\CustomRectorRules\Rector\Property\PHPUnit\MockeryIntersectionTypedPropertyFromStrictSetUpRector
 
+**Tags:** `typed-properties`, `mockery`, `phpunit`, `configurable`, `php8.1`
+
 ## Description
 
 The `MockeryIntersectionTypedPropertyFromStrictSetUpRector` is a custom Rector rule designed to enhance the type definitions of Mockery-based properties in PHPUnit

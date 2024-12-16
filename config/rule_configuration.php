@@ -14,6 +14,13 @@ return [
         ruleDocsConfig: new RuleDocsConfig(
             description: MockeryIntersectionTypedPropertyFromStrictSetUpRector::DOCS_DESCRIPTION,
             exportPath: __DIR__ . '/../docs/mockery_property_types.md',
+            tags: [
+                'typed-properties',
+                'mockery',
+                'phpunit',
+                'configurable',
+                'php8.1',
+            ],
         ),
         ruleType: RuleType::WITH_CONFIG,
         fixtures: [
