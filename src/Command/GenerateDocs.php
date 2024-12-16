@@ -49,7 +49,7 @@ final class GenerateDocs extends Command
 
     private function processRule(RuleConfig $ruleConfig, OutputInterface $output): void
     {
-        $exportPath = $ruleConfig->ruleDocsConfig->exportPath;
+        $exportPath = __DIR__ . '/../../docs/' . $ruleConfig->ruleDocsConfig->exportPath;
         $ruleType = $ruleConfig->ruleType->value;
 
         $output->writeln('<info>Processing rule: ' . $ruleConfig->className . '</info>');
@@ -146,8 +146,10 @@ MARKDOWN;
         $output->writeln("\nGenerated Markdown:\n");
         $output->writeln($markdown);
 
-        $this->filesystem->put($ruleConfig->ruleDocsConfig->exportPath, $markdown);
-        $output->writeln('<info>Markdown saved to ' . $ruleConfig->ruleDocsConfig->exportPath . '</info>');
+        $exportPath = __DIR__ . '/../../docs/' . $ruleConfig->ruleDocsConfig->exportPath;
+
+        $this->filesystem->put($exportPath, $markdown);
+        $output->writeln('<info>Markdown saved to ' . $exportPath . '</info>');
     }
 
     private function generateSummaryMarkdown(array $ruleConfigs, string $outputPath, OutputInterface $output): void
@@ -160,17 +162,24 @@ MARKDOWN;
 No of rules: $ruleCount
 MARKDOWN . "\n\n";
 
-        $markdown .= "| Rule Class | Configurable | Tags |\n";
-        $markdown .= "|------------|------|--------------|\n";
-
         $counter = 1;
 
         foreach ($ruleConfigs as $ruleConfig) {
-            $className = $counter . '. ' . $ruleConfig->className;
+            $className = $ruleConfig->className;
+            $baseClass = basename(str_replace('\\', '/', $className));
             $tags = implode(', ', array_map(fn($tag) => "`{$tag}`", $ruleConfig->ruleDocsConfig->tags));
             $isConfigurable = $ruleConfig->ruleType === RuleType::WITH_CONFIG ? '✅' : '❌';
 
-            $markdown .= "| `{$className}` | {$isConfigurable} | {$tags} |\n";
+            $markdown .= <<<MARKDOWN
+## {$counter}. {$baseClass}
+
+- Docs: [{$className}](/docs/{$ruleConfig->ruleDocsConfig->exportPath})
+- Configurable: {$isConfigurable}
+- Tags: {$tags}
+MARKDOWN . "\n\n";
+
+
+            $counter++;
         }
 
         $this->filesystem->put($outputPath, $markdown);

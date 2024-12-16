@@ -13,7 +13,7 @@ return [
         className: MockeryIntersectionTypedPropertyFromStrictSetUpRector::class,
         ruleDocsConfig: new RuleDocsConfig(
             description: MockeryIntersectionTypedPropertyFromStrictSetUpRector::DOCS_DESCRIPTION,
-            exportPath: __DIR__ . '/../docs/mockery_property_types.md',
+            exportPath: 'mockery_property_types.md',
             tags: [
                 'typed-properties',
                 'mockery',
