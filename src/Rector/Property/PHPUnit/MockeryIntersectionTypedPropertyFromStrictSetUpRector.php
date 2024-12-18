@@ -22,6 +22,7 @@ use PHPStan\Type\Type;
 use Rector\Application\Provider\CurrentFileProvider;
 use Rector\CodingStyle\Node\NameImporter;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\Naming\Naming\UseImportsResolver;
 use Rector\NodeManipulator\ClassMethodPropertyFetchManipulator;
 use Rector\Rector\AbstractRector;
 use Rector\ValueObject\Application\File;
@@ -100,6 +101,7 @@ DESCRIPTION;
         private readonly ClassMethodPropertyFetchManipulator $classMethodPropertyFetchManipulator,
         private readonly NameImporter $nameImporter,
         private readonly CurrentFileProvider $currentFileProvider,
+        private readonly UseImportsResolver $useImportsResolver,
     ) {
     }
 
@@ -201,10 +203,11 @@ CODE_SAMPLE,
             $assignmentName = new FullyQualified($assignment->toString());
             $mockInterfaceName = new FullyQualified('Mockery\\MockInterface');
             $file = $this->currentFileProvider->getFile();
+            $uses = $this->useImportsResolver->resolve();
 
             if ($this->mockeryIntersectionTypedPropertyFromStrictSetUp->useShortImports && $file instanceof File) {
-                $assignmentName = $this->nameImporter->importName($assignmentName, $file);
-                $mockInterfaceName = $this->nameImporter->importName($mockInterfaceName, $file);
+                $assignmentName = $this->nameImporter->importName($assignmentName, $file, $uses);
+                $mockInterfaceName = $this->nameImporter->importName($mockInterfaceName, $file, $uses);
             }
 
             if (!$assignmentName instanceof Name || !$mockInterfaceName instanceof Name) {
@@ -244,6 +247,7 @@ CODE_SAMPLE,
                 continue;
             }
 
+            /** @var StaticCall $assignedExpr */
             if (!isset($assignedExpr->args[0])) {
                 continue;
             }
@@ -275,7 +279,12 @@ CODE_SAMPLE,
             return true;
         }
 
-        if ($type->getClassName() !== 'Mockery\LegacyMockInterface') {
+        $mockInterfaceClasses = [
+            'Mockery\LegacyMockInterface',
+            'Mockery\MockInterface',
+        ];
+
+        if (!in_array($type->getClassName(), $mockInterfaceClasses, true)) {
             return true;
         }
 

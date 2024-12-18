@@ -1,6 +1,6 @@
 includes:
     - vendor/symplify/phpstan-rules/config/symplify-rules.neon
-
+    - vendor/symplify/phpstan-rules/config/rector-rules.neon
 parameters:
     level: max
 
@@ -19,6 +19,5 @@ parameters:
     ignoreErrors:
          # rector co-variant
          - '#Parameter \#1 \$node (.*?) of method MCampbell508\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\RectorInterface\:\:refactor\(\)#'
-         -
-            message: '#Named arguments do not add any value here#'
-            path: config/rule_configuration.php
+         - '#provideMinPhpVersion\(\) never returns #'
+         - '#is missing @see annotation with test case class#'
